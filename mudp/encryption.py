@@ -54,8 +54,9 @@ def encrypt_packet(channel: str, key: str, mp: mesh_pb2.MeshPacket, encoded_mess
     Returns:
         The encrypted message bytes or None on failure.
     """
-    if key == "AQ==":
-        key = "1PG7OiApB1nwvP+rz05pAQ=="
+    if key.endswith("==") and len(key) == 4:
+        # Meshtastic 1bit key
+        key = "1PG7OiApB1nwvP+rz05p" + key
 
     try:
         mp.channel = generate_hash(channel, key)
